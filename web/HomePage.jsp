@@ -12,21 +12,22 @@
        
     </head>
     <body>
-        <table>
+      <h1 align="center">Client HomePage</h1>
+        <table align="center" border="1">
+            <tr>
+                <td><a href="MyProfile.jsp">MyProfile</a></td>
+            </tr>
+            <tr>
+                <td><a href="EditProfile.jsp">EditProfile</a></td>
+            </tr>
+            <tr>
+                <td><a href="ChangePassword.jsp">ChangePassword</a></td>
+            </tr>
+            <tr>
+                <td><a href="AddClientProject.jsp">AddProject</a></td>
+            </tr>
             
-             <td>
-                 <a href="CategoryDetails.jsp">Category Details </a>
-                         </td>
-            
-            
-                         <td>
-                 <a href="SubCategory.jsp">Sub_Category Details </a>
-                         </td>
-            
-            
-                         <td>
-                 <a href="TechnologyDetails.jsp">Technology Details </a>
-                         </td>
+             
             
         </table>
        
