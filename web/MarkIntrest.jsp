@@ -1,6 +1,6 @@
 <%-- 
-    Document   : ProjectList
-    Created on : Oct 9, 2017, 12:20:55 PM
+    Document   : MarkIntrest
+    Created on : Oct 28, 2017, 10:09:24 AM
     Author     : student26
 --%>
 <html lang="en">
@@ -70,10 +70,42 @@
 
 
 
+
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean class="db.dbConnection" id="obj"></jsp:useBean>
 <!DOCTYPE html>
+<%
+   String clientid=request.getParameter("cid");
+     String projectid=request.getParameter("pid");
+   // String projectid=session.getAttribute("lgid").toString();
+    
+   
+    if(request.getParameter("btn_submit")!=null)
+    {
+     String devid=session.getAttribute("lgid").toString();
+     clientid=request.getParameter("cid");
+     projectid=request.getParameter("pid");
+//String date=request.getParameter("dt_date");
+String dur=request.getParameter("txt_duration");
+String amt=request.getParameter("txt_famount");
+String desc=request.getParameter("txt_description");
+
+String str="insert into tbl_makintrest(dev_id,client_id,project_id,intrest_date,duration,amount,description) values('"+devid+"','"+clientid+"','"+projectid+"',curdate(),'"+dur+"','"+amt+"','"+desc+"')";
+
+      boolean b=obj.insert(str);
+      if(b==true)
+            out.print("Message sent successfully...Please wait");
+      else
+          out.print(str);
+    }
+
+%>
+
+
+
+
+
 
 <html>
     <head>
@@ -81,80 +113,40 @@
         <title>JSP Page</title>
     </head>
     <body>
-        
-         <%       
-                if(request.getParameter("ac")!=null)
-                     {
-                            //String de=request.getParameter("ac");
-                           // String acQry="update tbl_clientproject set project_status=2 where project_id="+de;
-                           // boolean b = obj.insert(acQry);
-                            //if(b==true)
-                           // {
-                         
-                            out.print("Message sent successfully to the client");
-                         
-                            //}
-                     }
-            
-                
-                %>
-        
-                 <div class="col-md-3"></div>
+         <div class="col-md-3"></div>
         
         <div class="col-md-9"  style="margin-top: -20px">
         <form class="form-group">
             <table align="center" class="table table-hover">
       
               
-                          
+              <input type="hidden" name="cid" value="<%=clientid%>">
+               <input type="hidden" name="pid" value="<%=projectid%>">
+             
+        
+            <tr>
+                <td colspan="2">
+                    <h1><u>Enter Details</u></h1>
+                </td>
+               
                 <tr>
-                    
-                        <%
-                        String str="select * from tbl_clientproject c inner join tbl_technology t on c.tech_id=t.tech_id";
-                         ResultSet rs1=obj.select(str);
-                         while(rs1.next())
-                         {
-                         %>
-                    
-                   
-               
-                         <tr>
-                             <th>
-                                 <h3><%=rs1.getString("project_name")%></h3>
-                             </th>
-                         </tr>
-                         <tr>
-                              <th>Technology</th> <th>Project Budget</th>
-                         </tr>
-                         <tr>
-                              <td>
-                                 <%=rs1.getString("tech_name")%>
-                             </td>
-                              <td>
-                                 <%=rs1.getString("project_budget")%>
-                             </td>
-                      
-                            
-                     
-                         
-                                                                           
-                           <td>
-                               <a href="ViewDetails.jsp?view=<%=rs1.getString("project_id")%>" class="btn btn-info">View</a>
-                         </td>
-                         </tr>
-                        
-                         
-                        <%
-                         }
-                        %>
-                        
-                   <td>
+                    <td>Description if any:</td>
+                    <td><input type="textbox" id="desccription" name="txt_description" required=""></td>
+                </tr>
+                <tr>
+                    <td>Expected Duration in months:</td>
+                    <td><input type="textbox" id="duration" name="txt_duration" required=""></td>
+                </tr>
+                <tr>
+                    <td>Final amount:</td>
+                    <td><input type="textbox" id="famount" name="txt_famount" required=""></td>
+                </tr>
+                <tr>
+	       
+         <td colspan="5" align="right">
+                        <a href="ProjectList.jsp"> <input type="submit" name="btn_submit" class="btn btn-success" value="Submit"></a>
                    </td>
-               
-            </table>
-        </form>
-
-
-    
+                </tr>
+                <tr>
     </body>
 </html>

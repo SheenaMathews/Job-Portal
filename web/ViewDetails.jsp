@@ -1,8 +1,9 @@
 <%-- 
-    Document   : ProjectList
-    Created on : Oct 9, 2017, 12:20:55 PM
+    Document   : ViewList
+    Created on : Oct 26, 2017, 3:53:17 PM
     Author     : student26
 --%>
+
 <html lang="en">
 
 <head>
@@ -69,81 +70,80 @@
   </script>
 
 
-
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean class="db.dbConnection" id="obj"></jsp:useBean>
 <!DOCTYPE html>
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
     <body>
+    <%
+        String view=request.getParameter("view");
+        %>
         
-         <%       
-                if(request.getParameter("ac")!=null)
-                     {
-                            //String de=request.getParameter("ac");
-                           // String acQry="update tbl_clientproject set project_status=2 where project_id="+de;
-                           // boolean b = obj.insert(acQry);
-                            //if(b==true)
-                           // {
-                         
-                            out.print("Message sent successfully to the client");
-                         
-                            //}
-                     }
-            
-                
-                %>
-        
-                 <div class="col-md-3"></div>
+         <div class="col-md-3"></div>
         
         <div class="col-md-9"  style="margin-top: -20px">
         <form class="form-group">
             <table align="center" class="table table-hover">
       
               
-                          
-                <tr>
                     
                         <%
-                        String str="select * from tbl_clientproject c inner join tbl_technology t on c.tech_id=t.tech_id";
+                        String str="select * from tbl_client c inner join tbl_clientproject p on c.client_id=p.client_id inner join tbl_technology t on p.tech_id=t.tech_id where p.project_id="+view;
                          ResultSet rs1=obj.select(str);
                          while(rs1.next())
                          {
                          %>
                     
-                   
+                <tr>
+                    <td><th>
+                        <%=rs1.getString("project_name")%> </th>
+                    </td>
+                    </tr>
                
                          <tr>
-                             <th>
-                                 <h3><%=rs1.getString("project_name")%></h3>
-                             </th>
+                             <td>Description:</td>
+                             
+                             <td>
+                                 <%=rs1.getString("project_description")%>
+                             </td>
                          </tr>
                          <tr>
-                              <th>Technology</th> <th>Project Budget</th>
-                         </tr>
-                         <tr>
-                              <td>
+                             <td>Technology:</td>
+                             
+                             <td>
                                  <%=rs1.getString("tech_name")%>
                              </td>
-                              <td>
+                         </tr>
+                        <tr>
+                             <td>Budget:</td>
+                             
+                             <td>
                                  <%=rs1.getString("project_budget")%>
                              </td>
-                      
-                            
-                     
-                         
-                                                                           
-                           <td>
-                               <a href="ViewDetails.jsp?view=<%=rs1.getString("project_id")%>" class="btn btn-info">View</a>
-                         </td>
                          </tr>
-                        
+                          
+                         <tr>
+                             <td>Duration:</td>
+                             
+                             <td>
+                                 <%=rs1.getString("project_duration")%>
+                             </td>
+                         </tr>
+                         <td>
+                             &nbsp;
+                         </td>
+                         <td>
+                             <a href="MarkIntrest.jsp?pid=<%=rs1.getString("project_id")%>&cid=<%=rs1.getString("client_id")%>" class="btn btn-info">Mark_Intrest</a>
+                         </td>
                          
+                        
+                </tr>
+                        
                         <%
                          }
                         %>
@@ -158,3 +158,4 @@
     
     </body>
 </html>
+
